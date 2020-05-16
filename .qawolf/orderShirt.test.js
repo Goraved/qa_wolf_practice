@@ -1,0 +1,85 @@
+const qawolf = require("qawolf");
+
+let browser;
+let page;
+
+beforeAll(async () => {
+  browser = await qawolf.launch();
+  const context = await browser.newContext();
+  await qawolf.register(context);
+  page = await context.newPage();
+});
+
+afterAll(async () => {
+  await qawolf.stopVideos();
+  await browser.close();
+});
+
+test("orderShirt", async () => {
+  await page.goto("http://automationpractice.com/index.php");
+  await page.click("css=li:nth-of-type(3) >> text=T-SHIRTS");
+  await qawolf.scroll(page, "html", { x: 0, y: 537 });
+  await page.click('[itemprop="name"]');
+//  await qawolf.scroll(page, "html", { x: 0, y: 143 });
+  await page.click("text=Add to cart");
+  await page.click("text=Proceed to checkout");
+  await qawolf.scroll(page, "html", { x: 0, y: 287 });
+  await page.click("css=#center_column >> text=Proceed to checkout");
+  await qawolf.scroll(page, "html", { x: 0, y: 155 });
+  await page.click("#email_create");
+  var rand = Math.random().toString(36).substring(7);
+  await page.type("#email_create", `goraved@${rand}.com`);
+  await page.click("#SubmitCreate");
+  await page.click('[name="id_gender"]');
+  await page.click('[name="customer_firstname"]');
+  await page.type('[name="customer_firstname"]', "Ts");
+  await page.press('[name="customer_firstname"]', "Backspace");
+  await page.type('[name="customer_firstname"]', "est");
+  await page.press('[name="customer_firstname"]', "Tab");
+  await page.type('[name="customer_lastname"]', "Goraved");
+  await qawolf.scroll(page, "html", { x: 0, y: 313 });
+  await page.click('[name="passwd"]');
+  await page.type('[name="passwd"]', "123asd");
+  await page.selectOption("#days", "1");
+  await page.selectOption("#months", "1");
+  await page.selectOption("#years", "2020");
+  await qawolf.scroll(page, "html", { x: 0, y: 488 });
+  await page.click('[name="optin"]');
+  await page.click("#newsletter");
+  await page.click('[name="firstname"]');
+  await qawolf.scroll(page, "html", { x: 0, y: 714 });
+  await page.click('[name="address1"]');
+  await page.type('[name="address1"]', "street");
+  await qawolf.scroll(page, "html", { x: 0, y: 909 });
+  await page.click("#city");
+  await page.type("#city", "test");
+  await qawolf.scroll(page, "html", { x: 0, y: 1017 });
+  await page.selectOption("#id_state", "1");
+  await page.click("#postcode");
+  await page.type("#postcode", "11111");
+  await qawolf.scroll(page, "html", { x: 0, y: 1251 });
+  await page.click("#other");
+  await page.type("#other", "123");
+  await qawolf.scroll(page, "html", { x: 0, y: 1358 });
+  await page.click("#phone_mobile");
+  await page.type("#phone_mobile", "123");
+  await page.click("#alias");
+  await page.click("#alias");
+  await page.click("#alias");
+  await page.click("#submitAccount");
+  await qawolf.scroll(page, "html", { x: 0, y: 504 });
+  await page.click("css=#center_column >> text=Proceed to checkout");
+  await qawolf.scroll(page, "html", { x: 0, y: 156 });
+  await page.click('[name="cgv"]');
+  await page.click("css=#form >> text=Proceed to checkout");
+  await qawolf.scroll(page, "html", { x: 0, y: 536 });
+  await page.click('[title="Pay by bank wire"]');
+  await qawolf.scroll(page, "html", { x: 0, y: 237 });
+  await page.click("css=#cart_navigation >> text=I confirm my order");
+  await qawolf.scroll(page, "html", { x: 0, y: 176 });
+  await page.click(".box");
+  await qawolf.scroll(page, "html", { x: 0, y: 0 });
+  await page.click("text=Test Goraved");
+  await page.click("text=ORDER HISTORY AND DETAILS");
+  await expect(page).toHaveSelector('#order-list > tbody > tr');
+});
