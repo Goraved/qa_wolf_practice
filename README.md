@@ -1,5 +1,5 @@
 # QA wolf practice
-Just a QA Wolf tool practice
+Just a [QA Wolf](https://www.qawolf.com) tool practice
 
 ## Tool
 https://www.qawolf.com
